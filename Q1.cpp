@@ -1,14 +1,14 @@
-#include <stdio.h>
-#include <string.h>
+#include <iostream>
+#include <string>
+using namespace std;
 
-// For a given window size l, count minimum operations needed
-int countOps(char *bulbs, int n, int l) {
+int countOps(string &bulbs, int n, int l) {
     int ops = 0;
     int i = 0;
     while (i < n) {
         if (bulbs[i] == '1') {
             ops++;
-            i += l;  // skip the whole window we just turned off
+            i += l;
         } else {
             i++;
         }
@@ -17,26 +17,27 @@ int countOps(char *bulbs, int n, int l) {
 }
 
 int main() {
+    ios_base::sync_with_stdio(false);
+    cin.tie(NULL);
+
     int n, k;
-    scanf("%d %d", &n, &k);
+    cin >> n >> k;
 
-    char bulbs[100005];
-    scanf("%s", bulbs);
+    string bulbs;
+    cin >> bulbs;
 
-    // Binary search on l
     int lo = 1, hi = n, ans = n;
 
     while (lo <= hi) {
         int mid = (lo + hi) / 2;
-
         if (countOps(bulbs, n, mid) <= k) {
             ans = mid;
-            hi = mid - 1;  // try smaller l
+            hi = mid - 1;
         } else {
-            lo = mid + 1;  // need bigger l
+            lo = mid + 1;
         }
     }
 
-    printf("%d\n", ans);
+    cout << ans << "\n";
     return 0;
 }
